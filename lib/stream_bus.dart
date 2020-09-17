@@ -1,33 +1,31 @@
 import 'dart:async';
 
+import 'Subscription.dart';
+
 
 class StreamBus {
+ // 定义定义一个总线流的控制器  StreamController
   StreamController _streamController;
 
-  /// 事件总线流的控制器。
+  /// 获取StreamController。
   StreamController get streamController => _streamController;
+  ///获取 Stream 用于监听
+  Stream  get _dataStream => _streamController.stream;
 
-
+///广播Stream
   StreamBus({bool sync = false})
       : _streamController = StreamController.broadcast(sync: sync);
 
 
-  StreamBus.customController(StreamController controller)
-      : _streamController = controller;
+  //返回Responder
+  Subscription on<T>(Responder<T> responder) =>
+      Subscription(_dataStream).respond<T>(responder);
 
-  ///
-  Stream<T> on<T>() {
-    if (T == dynamic) {
-      return streamController.stream;
-    } else {
-      return streamController.stream.where((event) => event is T).cast<T>();
-    }
-  }
 
   /// 发送一个事件.
   ///
-  void fire(event) {
-    streamController.add(event);
+  void post(event) {
+    _streamController.add(event);
   }
 
   /// 销毁事件 .

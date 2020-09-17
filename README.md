@@ -1,24 +1,25 @@
-#
-第一步 创建
+
+第一步 接受
 ```
-import 'package:event_bus/stream_bus.dart';
-StreamBus streamBus = StreamBus();
-```
-第二步 发送
-```
+//创建event
 class OrderEvent {
   String order;
 
   NewOrderEvent(this.order);
 }
+//也可以不传递泛型 OrderEvent 接受任意的evnet
+GlobalStreamBus.event.respond<OrderEvent>((OrderEvent event) =>
 
-OrderEvent  order = OrderEvent('haha');
-streamBus.fire(order);
+);
 ```
 
-第三步接受指定类型。也可以不指定接受任意类型
+第二步发送
 ```
-streamBus.on<OrderEvent>().listen((event) {
-  print(event.user);
-});
+GlobalStreamBus().event.post(OrderEvent(222)) ;
+```
+
+
+第三部
+```
+subscription.dispose();关闭
 ```
