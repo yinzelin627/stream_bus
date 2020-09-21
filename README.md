@@ -11,6 +11,7 @@ class OrderEvent {
  GlobalStreamBus().event.on<OrderEvent>((OrderEvent event) { });
 ```
 
+
 第二步发送
 ```
 GlobalStreamBus().event.post(OrderEvent('11111'));
