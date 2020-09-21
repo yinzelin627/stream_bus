@@ -8,14 +8,12 @@ class OrderEvent {
   NewOrderEvent(this.order);
 }
 //也可以不传递泛型 OrderEvent 接受任意的evnet
-GlobalStreamBus.event.respond<OrderEvent>((OrderEvent event) =>
-
-);
+ GlobalStreamBus().event.on<OrderEvent>((OrderEvent event) { });
 ```
 
 第二步发送
 ```
-GlobalStreamBus().event.post(OrderEvent(222)) ;
+GlobalStreamBus().event.post(OrderEvent('11111'));
 ```
 
 
